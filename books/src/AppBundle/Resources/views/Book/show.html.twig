@@ -34,12 +34,14 @@
         <div>
             <h2>Comments</h2>
             <div class="row">
-                {% if comments is defined %}
-                    {% for comment in comments %}
+                {% if book.comments is defined %}
+                    {% for comment in book.comments %}
                         <div class="col-md-6 xol-sm-12">
-                            <h4>{{ comment.author }} </h4>
-                            <h5>{{ comment.date }}</h5>
-                            <p>{{ comment.text }}</p>
+                            <div class="commentBox">
+                                <h4>{{ comment.author }} </h4>
+                                <h5>{{ comment.comDate | date('d-m-Y') }}</h5>
+                                <p>{{ comment.text }}</p>
+                            </div>
                         </div>
                     {% endfor %}
                 {% endif %}
@@ -47,7 +49,8 @@
 
             <h3>Add comment</h3>
             {% if comment_form is defined %}
-                {{ form_start(comment_form) }}
+                {{ form_start(comment_form, {'action': path('comment_new', {'book_id' : book.id})}) }}
+                {{ form_widget(comment_form.text) }}<br/>
                 {{ form_widget(comment_form) }}
                 {{ form_end(comment_form) }}
 

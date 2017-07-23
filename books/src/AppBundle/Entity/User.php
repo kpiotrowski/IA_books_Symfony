@@ -45,6 +45,11 @@ class User extends BaseUser
     protected $invitations;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="author")
+     */
+    protected $comments;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $createdAt;
@@ -55,7 +60,7 @@ class User extends BaseUser
         parent::__construct();
         $this->createdAt = new \DateTime;
         $this->invitations = new ArrayCollection();
-
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -142,5 +147,36 @@ class User extends BaseUser
     public function setInvitationToken($invitationToken)
     {
         $this->invitationToken = $invitationToken;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
+
+    /**
+     * @param mixed $$comment
+     */
+    public function addComments($comment){
+        $this->comments[] = $comment;
+    }
+
+    /**
+     * @param mixed
+     */
+    public function removeComments($comment){
+        $this->comments->removeElement($comment);
     }
 }

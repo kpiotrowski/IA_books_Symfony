@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Book;
+use AppBundle\Entity\Comment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,6 +81,10 @@ class BookController extends Controller
                     'errors' => array('This book is not in your library! You have no permission to see it.')
                 );
             }
+            $comm = new Comment();
+            $comm->setBook($book);
+            $comment_form = $this->createForm('AppBundle\Form\CommentType', $comm);
+
             $form = $this->createForm('AppBundle\Form\BookType', $book);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
@@ -90,6 +95,7 @@ class BookController extends Controller
                     return array(
                         'errors' => array('You can\'t modify book title'),
                         'form' => $form->createView(),
+                        'comment_form' => $comment_form->createView(),
                         'book' => $book,
                     );
                 }
@@ -100,6 +106,7 @@ class BookController extends Controller
 
             return $this->render('AppBundle::Book/show.html.twig', [
                 'form' => $form->createView(),
+                'comment_form' => $comment_form->createView(),
                 'book' => $book,
             ]);
         } else {

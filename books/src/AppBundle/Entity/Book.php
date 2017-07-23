@@ -57,6 +57,11 @@ class Book
      */
     protected $createdBy;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="book")
+     */
+    protected $comments;
+
 
     protected $borrow_library;
 
@@ -73,13 +78,14 @@ class Book
     protected $current_borrow;
 
 
-    protected $comments;
 
 
 
-
-
-
+    public function __construct()
+    {
+        parent::__construct();
+        $this->comments = new ArrayCollection();
+    }
 
 
 
@@ -217,6 +223,36 @@ class Book
     public function setCreatedBy($createdBy)
     {
         $this->createdBy = $createdBy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
+
+    /**
+     * @param mixed $$comment
+     */
+    public function addComments($comment){
+        $this->comments[] = $comment;
+    }
+
+    /**
+     * @param mixed
+     */
+    public function removeComments($comment){
+        $this->comments->removeElement($comment);
     }
 
 
