@@ -1,0 +1,16 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+    {% block fos_user_content %}
+        {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+            {{ form_widget(form) }}
+
+        {# Token z zaproszeniem #}
+        {% if app.request.get('book_library_invitation_token') %}
+            <input type="hidden" value="{{ app.request.get('book_library_invitation_token') }}"  title="book_library_invitation_token" name="book_library_invitation_token"/>
+        {% endif %}
+
+            <div>
+                <input class="btn btn-primary btn-block" type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+            </div>
+
+        {{ form_end(form) }}
+    {% endblock fos_user_content %}

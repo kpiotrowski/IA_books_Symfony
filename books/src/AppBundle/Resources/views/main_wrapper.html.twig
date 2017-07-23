@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+    <head>
+        {% block stylesheets %}
+            {% stylesheets filter='cssrewrite' 'bundles/app/css/*.css'  %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+
+            <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+        {% endblock stylesheets %}
+
+        {% block javascriptsHead %}
+            {% javascripts '@AppBundle/Resources/public/js/jquery.min.js'%}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+
+        <meta charset="UTF-8"/>
+        <title>{% block title %}BOOKS - Kamil Piotrowski{% endblock %}</title>
+    </head>
+    <body>
+        {% block top %}
+            {% include 'AppBundle::top.html.twig' %}
+        {% endblock %}
+
+        <div class="container">
+            {% block body %}
+            {% endblock %}
+        </div>
+
+        {% block bottom %}
+            {% include 'AppBundle::bottom.html.twig' %}
+        {% endblock %}
+    </body>
+
+    {% block javascriptsBottom %}
+        {% javascripts '@AppBundle/Resources/public/js/scripts.js'%}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+
+</html>

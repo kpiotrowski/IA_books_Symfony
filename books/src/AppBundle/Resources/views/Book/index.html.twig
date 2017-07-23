@@ -1,0 +1,55 @@
+{% extends "AppBundle::main_wrapper.html.twig" %}
+
+{% block body %}
+    {% include "AppBundle::Widgets/error_alert.html.twig" %}
+    <h1>BOOKS</h1>
+
+    <a class="button-right btn btn-success" href="{{ path('book_new') }}">ADD BOOK TO LIBRARY</a>
+
+    <form method="get" id="booksForm">
+
+        <div class="form-group">
+            <input value="{{ app.request.get('titleOrAuthor') }}" name="titleOrAuthor" class="form-control" placeholder="search: title or author"/>
+        </div>
+
+        <table class="table table-striped">
+
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Subtitle</th>
+                    <th>Author</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if books is defined %}
+                {% for item in books %}
+                    <tr>
+                        <td><a href="{{ path('book_show', {'id':item.id }) }}">
+                            {{  item.title }}
+
+                            </a>
+                        </td>
+                        <td>{{  item.subtitle }}</td>
+                        <td>{{  item.author }}</td>
+                    </tr>
+                {% endfor %}{% endif %}
+            </tbody>
+            <tfoot>
+                <tr class="footerTable">
+                    <td></td>
+                    <td></td>
+                    <td>
+                        page {{ currPage }} / {{ pages }}
+                        <span class="tablePrevButton btn-default btn btn-sm">prev</span>
+                        <span class="tableNextButton btn-default btn btn-sm">next</span>
+                        <input id="pageNum" name="pageNum" type="hidden" value="{{ currPage }}"/>
+                        <input id="maxPages" type="hidden" value="{{ pages }}">
+                    </td>
+                </tr>
+            </tfoot>
+
+        </table>
+
+    </form>
+{% endblock %}

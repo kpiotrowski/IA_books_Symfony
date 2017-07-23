@@ -1,0 +1,34 @@
+{% extends "AppBundle::main_wrapper.html.twig" %}
+
+{% block body %}
+    {% include "AppBundle::Widgets/error_alert.html.twig" %}
+    <h1>Invitations</h1>
+
+    <a class="button-right btn btn-success" href="{{ path('invitation_new') }}">NEW INVITATION</a>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Accepted</th>
+            </tr>
+            </thead>
+        <tbody>
+            {% if invitations is defined %}
+            {% for item in invitations %}
+
+                <tr>
+                    <td>{{  item.userEmail }}</td>
+                    {% if item.enabled %}
+                        <td>not accepted</td>
+                    {% else %}
+                        <td>accepted</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}{% endif %}
+        </tbody>
+
+    </table>
+
+{% endblock %}

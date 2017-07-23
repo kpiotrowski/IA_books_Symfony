@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+
+    <body>
+        <p>Gratulacje, użytkownik {{ user.email }} zaprosił Cię abyś dołączył do jego biblioteki. Kliknij w poniższy link:
+        </p>
+
+        <a href="{{ url('fos_user_registration_register') }}?book_library_invitation_token={{ token }}">CLICK ME!</a>
+
+        <p>lub skopiuj poniższy adres:
+
+        {{ url('fos_user_registration_register') }}?book_library_invitation_token={{ token }}
+        </p>
+    </body>
+</html>

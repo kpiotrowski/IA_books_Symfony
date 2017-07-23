@@ -1,0 +1,56 @@
+html{
+    box-sizing: border-box;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+* {
+    box-sizing: inherit;
+    font-size: 16px;
+}
+body{
+    padding: 0;
+    margin: 0;
+    position: relative;
+    padding-bottom: 5.7em;
+    min-height: 100%;
+}
+.login-form-wrapper{
+    text-align: center;
+}
+.login-form-inside{
+    margin-top: 50px;
+    display: inline-block;
+    max-width: 350px;
+    width: 350px;
+    text-align: left;
+}
+h1 {
+    display: inline-block;
+}
+.container{
+    min-height: 100%;
+}
+.button-right {
+    float: right;
+    margin-top: 20px;
+}
+
+footer {
+    width:100%;
+    padding: 1.4em;
+    background: #CCCCCC;
+    position: absolute;
+    bottom: 0;
+    border-style: solid;
+    border-color: #111111;
+    border-width: 0;
+    border-top-width: 2px;
+}
+footer > p {
+    font-weight: bold;
+    margin:0;
+}
+.footerTable td{
+    text-align: right;
+}

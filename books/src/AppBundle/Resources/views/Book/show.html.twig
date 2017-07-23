@@ -1,0 +1,58 @@
+{% extends "AppBundle::main_wrapper.html.twig" %}
+
+{% block body %}
+    {% include "AppBundle::Widgets/error_alert.html.twig" %}
+
+    {% if book is defined %}
+        <h1>{{ book.title }} {{ book.subtitle }}</h1>
+
+        <div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    {{ form_row(form.title, {'disabled':true}) }}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    {{ form_row(form.subtitle) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    {{ form_row(form.author) }}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    {{ form_row(form.pages) }}
+                </div>
+            </div>
+
+            {{ form_start(form) }}
+                {{ form_row(form.title, {'disabled':true}) }}
+                {{ form_widget(form) }}
+            {{ form_end(form) }}
+
+        </div>
+
+        <div>
+            <h2>Comments</h2>
+            <div class="row">
+                {% if comments is defined %}
+                    {% for comment in comments %}
+                        <div class="col-md-6 xol-sm-12">
+                            <h4>{{ comment.author }} </h4>
+                            <h5>{{ comment.date }}</h5>
+                            <p>{{ comment.text }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <h3>Add comment</h3>
+            {% if comment_form is defined %}
+                {{ form_start(comment_form) }}
+                {{ form_widget(comment_form) }}
+                {{ form_end(comment_form) }}
+
+            {% endif %}
+
+        </div>
+    {% endif %}
+{% endblock %}
