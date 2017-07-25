@@ -1,6 +1,8 @@
 {% extends "AppBundle::main_wrapper.html.twig" %}
 
 {% block body %}
+    {% include "AppBundle::Widgets/error_alert.html.twig" %}
+
     <h1>NEW BOOK</h1>
 
     <div class="form-group">
@@ -11,6 +13,10 @@
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
+        {% if force is defined %}
+            <input type="hidden" name="force" value="true"/>
+            {% endif %}
+
     {{ form_end(form) }}
 
 

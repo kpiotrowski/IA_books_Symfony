@@ -66,3 +66,6 @@ footer > p {
 .commentBox h4 {
     font-weight: bold;
 }
+textarea {
+    max-width: 100%;
+}

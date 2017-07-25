@@ -54,6 +54,11 @@ class User extends BaseUser
      */
     protected $createdAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\BookRead", mappedBy="user")
+     */
+    protected $readBooks;
+
 
     public function __construct()
     {
@@ -61,6 +66,7 @@ class User extends BaseUser
         $this->createdAt = new \DateTime;
         $this->invitations = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->readBooks = new ArrayCollection();
     }
 
     /**
@@ -178,5 +184,27 @@ class User extends BaseUser
      */
     public function removeComments($comment){
         $this->comments->removeElement($comment);
+    }
+
+    /**
+     * @param mixed $readBooks
+     */
+    public function setReadBooks($readBooks)
+    {
+        $this->readBooks = $readBooks;
+    }
+
+    /**
+     * @param mixed $$comment
+     */
+    public function addReadBooks($readBook){
+        $this->readBooks[] = $readBook;
+    }
+
+    /**
+     * @param mixed
+     */
+    public function removeReadBooks($readBook){
+        $this->readBooks->removeElement($readBook);
     }
 }

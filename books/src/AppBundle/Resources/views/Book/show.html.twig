@@ -6,6 +6,8 @@
     {% if book is defined %}
         <h1>{{ book.title }} {{ book.subtitle }}</h1>
 
+        {{ form_start(form) }}
+
         <div>
             <div class="row">
                 <div class="col-md-6 col-sm-12">
@@ -24,9 +26,8 @@
                 </div>
             </div>
 
-            {{ form_start(form) }}
-                {{ form_row(form.title, {'disabled':true}) }}
                 {{ form_widget(form) }}
+
             {{ form_end(form) }}
 
         </div>

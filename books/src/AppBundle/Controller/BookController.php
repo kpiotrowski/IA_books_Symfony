@@ -89,16 +89,8 @@ class BookController extends Controller
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $book2 = $form->getData();
-                if ( $title != $book2->getTitle()) {
-                    $book->setTitle($title);
-                    $form = $this->createForm('AppBundle\Form\BookType', $book);
-                    return array(
-                        'errors' => array('You can\'t modify book title'),
-                        'form' => $form->createView(),
-                        'comment_form' => $comment_form->createView(),
-                        'book' => $book,
-                    );
-                }
+                $book2->setTitle($title);
+
                 $em->persist($book2);
                 $em->flush();
                 return $this->redirectToRoute('book_show', array('id' => $id));
@@ -127,7 +119,6 @@ class BookController extends Controller
      */
     public function newAction(Request $request)
     {
-        $errors = array();
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if($user->getLibrary()) {
             $library = $user->getLibrary();
@@ -137,11 +128,33 @@ class BookController extends Controller
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
+
+                $force = $request->request->get('force');
+                $qb = $em->createQueryBuilder();
+                $query = $qb->select('COUNT(i)')
+                    ->from('AppBundle:Book', 'i')
+                    ->where('i.library = :lib AND i.title = :tit AND i.subtitle = :subtit AND i.author = :auth')
+                    ->setParameter('lib', $library )
+                    ->setParameter('tit', $book->getTitle() )
+                    ->setParameter('subtit', $book->getSubtitle() )
+                    ->setParameter('auth', $book->getAuthor() )
+                ;
+                $result = $query->getQuery()->getSingleScalarResult();
+                if ($result && !$force) {
+
+                    $form = $this->createForm('AppBundle\Form\BookType', $book);
+                    return $this->render('AppBundle::Book/new.html.twig', array(
+                        'errors' => array("This book already exist in your library, do you really want to add it? Click save to do it."),
+                        'invitation' => $book,
+                        'form' => $form->createView(),
+                        'force' => true
+                    ));
+                }
+
+
                 $book->setLibrary($library);
                 $book->setCreatedBy($user);
                 $library->addBooks($book);
-
-
                 $em->persist($book);
                 $em->flush();
                 return $this->redirectToRoute('books_index');
