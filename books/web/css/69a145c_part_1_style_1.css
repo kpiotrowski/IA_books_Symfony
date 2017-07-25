@@ -54,3 +54,15 @@ footer > p {
 .footerTable td{
     text-align: right;
 }
+.commentBox{
+    background: rgba(255, 243, 0, 0.38);
+    margin: 5px;
+    border-radius: 15px;
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    overflow: hidden;
+}
+.commentBox h4 {
+    font-weight: bold;
+}

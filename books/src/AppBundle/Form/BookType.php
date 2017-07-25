@@ -18,14 +18,22 @@ class BookType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->
-            add('title')->
+            add('title', null, array(
+                'attr' => array('class' => 'bookTitleClass')
+            ))->
             add('subtitle', null, array(
                 'required' => false,
-            ))->
+                'attr' => array('class' => 'bookSubtitleClass')
+        ))->
             add('description', TextareaType::class, array(
                 'required' => false,
-            ))->
-            add('author')->
+            'attr' => array('class' => 'bookDescriptionClass')
+
+        ))->
+            add('author',null,array(
+            'attr' => array('class' => 'bookAuthorClass')
+
+        ))->
             add('pages', null, array(
                 'required' => false,
             ))->

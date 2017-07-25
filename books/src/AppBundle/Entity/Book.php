@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -83,7 +84,6 @@ class Book
 
     public function __construct()
     {
-        parent::__construct();
         $this->comments = new ArrayCollection();
     }
 
