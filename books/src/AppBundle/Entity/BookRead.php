@@ -35,7 +35,7 @@ class BookRead
     protected $startDate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $endDate;
 
@@ -108,6 +108,38 @@ class BookRead
     public function setBook($book)
     {
         $this->book = $book;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
 

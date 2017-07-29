@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Book;
+use AppBundle\Entity\BookRead;
 use AppBundle\Entity\Comment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -35,7 +36,7 @@ class BookController extends Controller
         $qb = $em->createQueryBuilder();
         $query = $qb->select('i')
             ->from('AppBundle:Book', 'i')
-            ->where('i.library = :lib')
+            ->where('(i.library = :lib AND i.borrow_library is NULL) OR i.borrow_library = :lib')
             ->setParameter('lib', $user->getLibrary() );
         if ( isset($_GET['titleOrAuthor'])) {
             $search = $_GET['titleOrAuthor'];
@@ -76,11 +77,27 @@ class BookController extends Controller
         $title = $book->getTitle();
         if ($book) {
             $user = $this->get('security.token_storage')->getToken()->getUser();
-            if ($book->getLibrary() != $user->getLibrary()) {
+            if ($book->getLibrary() != $user->getLibrary() && $book->getBorrowLibrary() != $user->getLibrary()) {
                 return array(
                     'errors' => array('This book is not in your library! You have no permission to see it.')
                 );
             }
+            $qb = $em->createQueryBuilder();
+            $query = $qb->select('COUNT(i)')
+                ->from('AppBundle:BookRead', 'i')
+                ->where('i.book = :book AND i.user = :user AND i.status = :stat')
+                ->setParameter('book', $book)
+                ->setParameter('user', $user )
+                ->setParameter('stat', BookRead::READING)
+            ;
+            $result = $query->getQuery()->getSingleScalarResult();
+            if ($result) {
+                $reading = true;
+            } else {
+                $reading = false;
+            }
+
+
             $comm = new Comment();
             $comm->setBook($book);
             $comment_form = $this->createForm('AppBundle\Form\CommentType', $comm);
@@ -100,6 +117,8 @@ class BookController extends Controller
                 'form' => $form->createView(),
                 'comment_form' => $comment_form->createView(),
                 'book' => $book,
+                'reading' => $reading,
+                'user' => $user
             ]);
         } else {
             return array(

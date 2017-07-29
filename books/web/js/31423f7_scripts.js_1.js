@@ -40,7 +40,7 @@ $(document).ready(function () {
 
     $(".openLibrarySelectAjax").select2({
         ajax: {
-            url: "{{ path('search_open_library')|escape('js') }}",
+            url: Routing.generate('search_open_library'),
             dataType: 'json',
             delay: 400,
             data: function (params) {

@@ -1,5 +1,79 @@
 {% extends "AppBundle::main_wrapper.html.twig" %}
 
 {% block body %}
-    <h1>BOOKS</h1>
+    <h1>Welcome {{ username }}</h1>
+    <div class="row bookStats">
+
+        <div class="col-md-6 col-sm-12">
+            <h4>Number of finished books: </h4><span>{{ finishedCount }}</span>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <h4>Number of reading books: </h4><span>{{ readingCount }}</span>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <h4>Number of read pages: </h4><span>{{ readPages }}</span>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <h4>Book read average time [days]: </h4><span>{{ readBookAverage }}</span>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <h4>Number of read pages per day: </h4><span>{{ readDayPages }}</span>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <h4>Number of comments: </h4><span>{{ commentsNum }}</span>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <h4>Number of lent books: </h4><span>{{ lentNumber }}</span>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <h4>Number of borrowed books: </h4><span>{{ borrowedNumber }}</span>
+        </div>
+    </div>
+
+    <h3>Reading books</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Subtitle</th>
+                <th>Author</th>
+                <th>Start date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in readingBooks %}
+                <tr>
+                    <td><a href="{{ path('book_show', {'id':item.book.id }) }}">{{  item.book.title }}</a></td>
+                    <td>{{  item.book.subtitle }}</td>
+                    <td>{{  item.book.author }}</td>
+                    <td>{{ item.startDate | date('d-m-Y') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Finished books</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Subtitle</th>
+            <th>Author</th>
+            <th>Start date</th>
+            <th>End date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in finishedBooks %}
+            <tr>
+                <td><a href="{{ path('book_show', {'id':item.book.id }) }}">{{  item.book.title }}</a></td>
+                <td>{{  item.book.subtitle }}</td>
+                <td>{{  item.book.author }}</td>
+                <td>{{  item.startDate | date('d-m-Y') }}</td>
+                <td>{{ item.endDate | date('d-m-Y') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
 {% endblock %}

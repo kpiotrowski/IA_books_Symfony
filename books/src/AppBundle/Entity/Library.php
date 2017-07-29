@@ -33,19 +33,16 @@ class Library
      */
     protected $books;
 
-
-
-
-
-
-
-
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Book", mappedBy="borrow_library")
+     */
+    protected $borrowedBooks;
 
 
     public function __construct(){
         $this->users = new ArrayCollection();
         $this->books = new ArrayCollection();
+        $this->borrowedBooks = new ArrayCollection();
     }
 
 
@@ -133,6 +130,36 @@ class Library
     public function setOwner($owner)
     {
         $this->owner = $owner;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBorrowedBooks()
+    {
+        return $this->borrowedBooks;
+    }
+
+    /**
+     * @param mixed $borrowedBooks
+     */
+    public function setBorrowedBooks($borrowedBooks)
+    {
+        $this->borrowedBooks = $borrowedBooks;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function addBorrowedBooks($borrowedBook){
+        $this->borrowedBooks[] = $borrowedBook;
+    }
+
+    /**
+     * @param mixed
+     */
+    public function removeBorrowedBooks($borrowedBook){
+        $this->borrowedBooks->removeElement($borrowedBook);
     }
 
 }

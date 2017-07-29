@@ -5,6 +5,25 @@
 
     {% if book is defined %}
         <h1>{{ book.title }} {{ book.subtitle }}</h1>
+        <br/>
+
+        <form method="post" action="{{ path('book_read_action', {'bookId': book.id}) }}">
+            {% if reading is defined and reading %}
+                <button type="submit" class="bookStopReading btn btn-success">You're reading this book now, click to finish.</button>
+                <input type="hidden" name="action" value="stop">
+            {% else %}
+                <button type="submit" class="bookStartReading btn btn-success">Click to start reading this book.</button>
+                <input type="hidden" name="action" value="start">
+            {% endif %}
+
+        </form>
+        <br/>
+        {% if book.getBorrowLibrary() and book.currentBorrow.bookUser == user %}
+            <form method="post" action="{{ path('return_book', {'bookId': book.id}) }}">
+                <button type="submit" class="btn btn-success">Wypożyczasz tą książkę. Kliknij aby ją zwrócić.</button>
+            </form>
+        {% endif %}
+        <br/>
 
         {{ form_start(form) }}
 
@@ -59,4 +78,5 @@
 
         </div>
     {% endif %}
+
 {% endblock %}

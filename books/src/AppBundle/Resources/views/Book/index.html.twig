@@ -16,9 +16,10 @@
 
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Subtitle</th>
-                    <th>Author</th>
+                    <th>Tytuł</th>
+                    <th>Podtytuł</th>
+                    <th>Autor</th>
+                    <th>Info</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +33,16 @@
                         </td>
                         <td>{{  item.subtitle }}</td>
                         <td>{{  item.author }}</td>
+                        {% if item.getBorrowLibrary() %}
+                            {% if item.currentBorrow.bookOwner %}
+                                <td>WYPOŻYCZONA OD {{  item.currentBorrow.bookOwner.username }}</td>
+                            {% else %}
+                                <td>WYPOŻYCZONA Z ZEWNĄTRZ</td>
+                            {% endif %}
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+
                     </tr>
                 {% endfor %}{% endif %}
             </tbody>
@@ -39,8 +50,9 @@
                 <tr class="footerTable">
                     <td></td>
                     <td></td>
+                    <td></td>
                     <td>
-                        page {{ currPage }} / {{ pages }}
+                        strona {{ currPage }} / {{ pages }}
                         <span class="tablePrevButton btn-default btn btn-sm">prev</span>
                         <span class="tableNextButton btn-default btn btn-sm">next</span>
                         <input id="pageNum" name="pageNum" type="hidden" value="{{ currPage }}"/>

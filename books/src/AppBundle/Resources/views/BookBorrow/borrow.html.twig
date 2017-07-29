@@ -1,0 +1,15 @@
+{% extends "AppBundle::main_wrapper.html.twig" %}
+
+{% block body %}
+    {% include "AppBundle::Widgets/error_alert.html.twig" %}
+
+    <h1>Wypożycz książkę użytkownikowi</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.book)}}
+        {{ form_row(form.userEmail) }}
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "AppBundle::main_wrapper.html.twig" %}
+
+{% block body %}
+    <a href="{{ path('new_book_borrow') }}" type="submit" class="bookStopReading btn btn-success">Dodaj książkę wypożyczoną spoza systemu.</a>
+    <a href="{{ path('borrow_book') }}" type="submit" class="bookStopReading btn btn-success">Wypożycz książkę użytkownikowi z innej biblioteki.</a>
+
+
+    <h3>Książki pożyczone od kogoś</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Tytuł</th>
+            <th>Autor</th>
+            <th>Data wypożyczenia</th>
+            <th>Data oddania</th>
+            <th>Od kogo</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in borrowedBooks %}
+            <tr>
+                <td><a href="{{ path('book_show', {'id':item.book.id }) }}">{{  item.book.title }}</a></td>
+                <td>{{  item.book.author }}</td>
+                <td>{{ item.time | date('d-m-Y') }}</td>
+                {% if item.getFinishTime() %}
+                    <td>{{ item.getFinishTime() | date('d-m-Y') }}</td>
+                {% else %}
+                    <td>Nie oddana</td>
+                {% endif %}
+                <td>{{ item.bookOwner }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Książki pożyczone komuś</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Tytuł</th>
+            <th>Autor</th>
+            <th>Data wypożyczenia</th>
+            <th>Data oddania</th>
+            <th>Komu</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in lentBooks %}
+            <tr>
+                <td><a href="{{ path('book_show', {'id':item.book.id }) }}">{{  item.book.title }}</a></td>
+                <td>{{  item.book.author }}</td>
+                <td>{{ item.time | date('d-m-Y') }}</td>
+                {% if item.getFinishTime() %}
+                    <td>{{ item.getFinishTime() | date('d-m-Y') }}</td>
+                {% else %}
+                    <td>Nie oddana</td>
+                {% endif %}
+                <td>{{ item.bookUser }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

@@ -32,10 +32,8 @@ class CommentController extends Controller
         $re = $em->getRepository(Book::class);
         $book = $re->findOneById($book_id);
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        if ($book->getLibrary() != $user->getLibrary()) {
-            return array(
-                'errors' => array('You have no permissions to add comment to this book!')
-            );
+        if ($book->getLibrary() != $user->getLibrary() && $book->getBorrowLibrary() != $user->getLibrary()) {
+            return $this->redirectToRoute('book_show', array('id' => $book_id));
         }
 
         $comm = new Comment();

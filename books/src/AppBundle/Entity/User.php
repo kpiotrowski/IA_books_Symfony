@@ -56,8 +56,21 @@ class User extends BaseUser
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\BookRead", mappedBy="user")
+     * @ORM\OrderBy({"endDate" = "DESC"})
      */
     protected $readBooks;
+
+    /**
+     * Od kogoś
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\BookBorrow", mappedBy="bookUser")
+     */
+    protected $borrowedBooks;
+
+    /**
+     * Komus
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\BookBorrow", mappedBy="bookOwner")
+     */
+    protected $lentBooks;
 
 
     public function __construct()
@@ -67,6 +80,8 @@ class User extends BaseUser
         $this->invitations = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->readBooks = new ArrayCollection();
+        $this->borrowedBooks = new ArrayCollection();
+        $this->lentBooks = new ArrayCollection();
     }
 
     /**
@@ -206,5 +221,73 @@ class User extends BaseUser
      */
     public function removeReadBooks($readBook){
         $this->readBooks->removeElement($readBook);
+    }
+
+    /**
+     * @param mixed $borrowedBooks
+     */
+    public function setBorrowedBooks($borrowedBooks)
+    {
+        $this->borrowedBooks = $borrowedBooks;
+    }
+
+    /**
+     * @param mixed $$comment
+     */
+    public function addBorrowedBooks($borrowedBook){
+        $this->borrowedBooks[] = $borrowedBook;
+    }
+
+    /**
+     * @param mixed
+     */
+    public function removeBorrowedBooks($borrowedBook){
+        $this->borrowedBooks->removeElement($borrowedBook);
+    }
+
+    /**
+     * @param mixed $borrowedBooks
+     */
+    public function setLentBooks($lentBooks)
+    {
+        $this->lentBooks = $lentBooks;
+    }
+
+    /**
+     * @param mixed $$comment
+     */
+    public function addLentBooks($lentBook){
+        $this->lentBooks[] = $lentBook;
+    }
+
+    /**
+     * @param mixed
+     */
+    public function removeLentBooks($lentBook){
+        $this->lentBooks->removeElement($lentBook);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBorrowedBooks()
+    {
+        return $this->borrowedBooks;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLentBooks()
+    {
+        return $this->lentBooks;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReadBooks()
+    {
+        return $this->readBooks;
     }
 }

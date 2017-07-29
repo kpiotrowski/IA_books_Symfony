@@ -87,3 +87,5 @@ fos_user:
     registration:
         confirmation:
             enabled: true
+fos_js_routing:
+    routes_to_expose: [search_open_library]

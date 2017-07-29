@@ -63,22 +63,15 @@ class Book
      */
     protected $comments;
 
-
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Library", inversedBy="borrowedBooks")
+     */
     protected $borrow_library;
 
-
-
-
-
-    protected $owner_library;
-
-
-    protected $current_library;
-
-
-    protected $current_borrow;
-
-
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\BookBorrow")
+     */
+    protected $currentBorrow;
 
 
 
@@ -253,6 +246,38 @@ class Book
      */
     public function removeComments($comment){
         $this->comments->removeElement($comment);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBorrowLibrary()
+    {
+        return $this->borrow_library;
+    }
+
+    /**
+     * @param mixed $borrow_library
+     */
+    public function setBorrowLibrary($borrow_library)
+    {
+        $this->borrow_library = $borrow_library;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCurrentBorrow()
+    {
+        return $this->currentBorrow;
+    }
+
+    /**
+     * @param mixed $currentBorrow
+     */
+    public function setCurrentBorrow($currentBorrow)
+    {
+        $this->currentBorrow = $currentBorrow;
     }
 
 

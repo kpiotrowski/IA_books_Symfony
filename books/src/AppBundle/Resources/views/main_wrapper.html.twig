@@ -16,9 +16,10 @@
         {% endblock %}
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
-
-        <meta charset="UTF-8"/>
+    <meta charset="UTF-8"/>
         <title>{% block title %}BOOKS - Kamil Piotrowski{% endblock %}</title>
     </head>
     <body>
@@ -37,7 +38,7 @@
     </body>
 
     {% block javascriptsBottom %}
-        {% javascripts '@AppBundle/Resources/public/js/scripts.js'%}
+        {% javascripts '@AppBundle/Resources/public/js/scripts.js.twig'%}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% endblock %}

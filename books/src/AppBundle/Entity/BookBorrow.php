@@ -17,12 +17,25 @@ class BookBorrow
      */
     protected $id;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $userEmail;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="borrowedBooks")
+     */
+    protected $bookUser;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="lentBooks")
+     */
+    protected $bookOwner;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Book")
+     */
     protected $book;
-
-    protected $owner;
-
-    protected $current_user;
 
     /**
      * @ORM\Column(type="datetime")
@@ -30,16 +43,15 @@ class BookBorrow
     protected $time;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $finish_time;
 
 
-
-
-
-
-
+    public function __construct()
+    {
+        $this->time = new \DateTime();
+    }
 
 
 
@@ -84,6 +96,70 @@ class BookBorrow
     public function setFinishTime($finish_time)
     {
         $this->finish_time = $finish_time;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBookUser()
+    {
+        return $this->bookUser;
+    }
+
+    /**
+     * @param mixed $bookUser
+     */
+    public function setBookUser($bookUser)
+    {
+        $this->bookUser = $bookUser;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBookOwner()
+    {
+        return $this->bookOwner;
+    }
+
+    /**
+     * @param mixed $bookOwner
+     */
+    public function setBookOwner($bookOwner)
+    {
+        $this->bookOwner = $bookOwner;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBook()
+    {
+        return $this->book;
+    }
+
+    /**
+     * @param mixed $book
+     */
+    public function setBook($book)
+    {
+        $this->book = $book;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserEmail()
+    {
+        return $this->userEmail;
+    }
+
+    /**
+     * @param mixed $userEmail
+     */
+    public function setUserEmail($userEmail)
+    {
+        $this->userEmail = $userEmail;
     }
 
 

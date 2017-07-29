@@ -36,6 +36,7 @@ class BookType extends AbstractType
         ))->
             add('pages', null, array(
                 'required' => false,
+                'attr' => array('min' => 1)
             ))->
             add('publicationDate', DateTimeType::class, array(
                 'date_format'=> 'dd-MM-yyyy',
