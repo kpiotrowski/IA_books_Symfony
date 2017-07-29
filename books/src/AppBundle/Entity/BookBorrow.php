@@ -18,7 +18,7 @@ class BookBorrow
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $userEmail;
 
